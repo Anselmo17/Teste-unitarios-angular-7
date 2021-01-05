@@ -17,7 +17,7 @@ describe('HeroesComponent', () => {
     component = new HeroesComponent(mockHeroesService);
   });
   
-  describe('delete',() => {
+  describe('services heroes',() => {
     it('should remove the indicated hero from the heroes list', ()=>{
       mockHeroesService.deleteHero.and.returnValue(of(true));
       component.heroes = HEROES;
@@ -26,12 +26,27 @@ describe('HeroesComponent', () => {
      expect(component.heroes.length).toEqual(2);
     });
 
-    it('should call deleteHero', () =>{
+    it('should call deleteHero', () => {
       mockHeroesService.deleteHero.and.returnValue(of(true));
       component.heroes = HEROES;
       const hero = HEROES[0];
      component.delete(hero);
      expect(mockHeroesService.deleteHero).toHaveBeenCalled();
+    });
+
+    it('should call getHero', () => {
+      mockHeroesService.getHeroes.and.returnValue(of(true));
+      component.heroes = HEROES;
+     component.getHeroes()
+     expect(mockHeroesService.getHeroes).toBeTruthy();
+    });
+
+    it('should call addHero', () => {
+      mockHeroesService.addHero.and.returnValue(of(true));
+      component.heroes = HEROES;
+      const hero = HEROES[0].name;
+     component.add(hero);
+     expect(mockHeroesService.addHero).toBeTruthy();
     });
   });
 });
