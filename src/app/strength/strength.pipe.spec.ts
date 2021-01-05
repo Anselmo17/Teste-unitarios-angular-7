@@ -15,4 +15,10 @@ describe('StrengthPipe', () => {
     expect(val).toEqual('20 (unbelievable)');
   });
 
+  it('should display weak if strengh is 15', () => {
+    let pipe = new StrengthPipe();
+    const val = pipe.transform(15);
+    expect(val).toEqual('15 (strong)');
+  });
+
 });
