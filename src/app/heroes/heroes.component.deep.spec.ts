@@ -40,7 +40,7 @@ describe('HeroesComponent Deep', () => {
     expect(heroComponentDes.length).toEqual(3);
     
     for(let i=0; i < heroComponentDes.length; i++){
-      expect(heroComponentDes[i].componentInstance.hero.name).toEqual(HEROES[i]);
+      expect(heroComponentDes[i].componentInstance.hero.name).toEqual(HEROES[i].name);
     }
   });
 });
