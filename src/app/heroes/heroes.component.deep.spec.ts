@@ -63,7 +63,7 @@ describe('HeroesComponent Deep', () => {
 
     // run ngOnit
     fixture.detectChanges();
-    const name = 'Mr. Nice';
+    const name = 'SuperMam';
     mockHeroService.addHero.and.returnValue(of({id:5 , name , strength:6 }));
     const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
     const addButton = fixture.debugElement.query(By.css('button'))[0];
