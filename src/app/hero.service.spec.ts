@@ -25,12 +25,47 @@ describe('HeroService', () => {
     service = TestBed.get(HeroService);
   });
 
-  describe('getHero', () => {
     it('should call get with the correct URL', () => {
           service.getHero(1).subscribe();
           const req = httpTestingController.expectOne('api/heroes/1');
           req.flush({ id:1 , name:'SuperMan' , strength: 8 });
           httpTestingController.verify();
-        });
+      });
+
+     xit('should call get with the correct URL', () => {
+          service.getHeroNo404(10).subscribe();
+          const req = httpTestingController.expectOne('api/heroes/10');
+          req.flush({ id:1 , name:'SuperMan' , strength: 8 } + `fetched`);
+          httpTestingController.verify();
+      });
+
+    it('should call get list heroes', () => {
+      service.getHeroes().subscribe();
+      const req = httpTestingController.expectOne('api/heroes');
+      req.flush([{ id:1 , name:'SuperMan' , strength: 8 }]);
+      httpTestingController.verify();
+    });
+
+     it('should call get searchHeroes', () => {
+          service.searchHeroes('Testando o envio').subscribe();
+          const req = httpTestingController.expectOne('api/heroes/?name=Testando o envio');
+          req.flush({ id:1 , name:'SuperMan' , strength: 8 });
+          httpTestingController.verify();
+      });
+
+      it('should call get searchHeroes empty', () => {
+          const texto = ' tt ';
+          service.searchHeroes(texto).subscribe();
+          const req = httpTestingController.expectOne(`api/heroes/?name=${texto}`);
+          req.flush([]);
+          httpTestingController.verify();
+      });
+
+       it('should call post addHero', () => {
+          const hero = { id:1 , name:'SuperMan' , strength: 8 };
+          service.addHero(hero).subscribe();
+          const req = httpTestingController.expectOne(`api/heroes`);
+          req.flush(hero);
+          httpTestingController.verify();
+      });
   });
-});
