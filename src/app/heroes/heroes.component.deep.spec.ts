@@ -43,4 +43,36 @@ describe('HeroesComponent Deep', () => {
       expect(heroComponentDes[i].componentInstance.hero.name).toEqual(HEROES[i].name);
     }
   });
+
+  it('should call heroService.deleteHero when the Hero Component`s delete button is clicked', () => {
+    spyOn(fixture.componentInstance, 'delete');
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+
+    // run ngOnit
+    fixture.detectChanges();
+
+    const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent));
+    heroComponents[0].query(By.css('button'))
+    .triggerEventHandler('click',{ stopPropagation:() => {}});
+
+    expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+  });
+
+  it('should add a new hero to the hero list when the add button is clicked',() => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+
+    // run ngOnit
+    fixture.detectChanges();
+    const name = 'Mr. Nice';
+    mockHeroService.addHero.and.returnValue(of({id:5 , name , strength:6 }));
+    const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+    const addButton = fixture.debugElement.query(By.css('button'))[0];
+
+    inputElement.value = name;
+    addButton.triggerEventHandler('click', null);
+    
+    fixture.detectChanges();
+    const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContent;
+    expect(heroText).toContain(name);
+  });
 });
